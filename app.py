@@ -1,3 +1,12 @@
+import os
+os.environ["OBJC_DISABLE_INITIALIZE_FORK_SAFETY"] = "YES"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
+import tensorflow as tf
+tf.config.threading.set_inter_op_parallelism_threads(1)
+tf.config.threading.set_intra_op_parallelism_threads(1)
+
+
 import streamlit as st
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -6,7 +15,7 @@ from PIL import Image
 
 model = load_model("coral_model.h5")
 
-st.title("🌊 Coral Health Detection Demo")
+st.title("Coral Health Detection Demo")
 st.markdown("Upload a coral reef image and get an AI-based bleaching prediction.")
 
 uploaded_file = st.file_uploader("Upload Coral Image", type=["jpg", "png", "jpeg"])
